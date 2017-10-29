@@ -5,6 +5,9 @@ public class Configuration {
     private String baseURL;
     private int requestTime;
 
+    private static final int READ_TIMEOUT = 30000; // seconds
+    private static final int CONNECTION_TIMEOUT = 30000; // seconds
+
     public Configuration() {
     }
 
@@ -27,5 +30,13 @@ public class Configuration {
 
     public int getRequestTime() {
         return requestTime;
+    }
+
+    public static int getReadTimeout() {
+        return READ_TIMEOUT;
+    }
+
+    public static int getConnectionTimeout() {
+        return CONNECTION_TIMEOUT;
     }
 }
