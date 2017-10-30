@@ -1,7 +1,7 @@
 package edu.ttu.spm.DatabaseTestingRobot;
 
 public class PostResult {
-    private int statusCode;
+    private Integer statusCode;
     private long responseTime;
 
     public PostResult() {
@@ -12,7 +12,7 @@ public class PostResult {
         this.responseTime = responseTime;
     }
 
-    public int getStatusCode() {
+    public Integer getStatusCode() {
         return statusCode;
     }
 
