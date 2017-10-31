@@ -12,7 +12,7 @@ public class Main {
 
         //set configuration
         Configuration configuration = new Configuration();
-        configuration.setBaseURL("http://10.161.42.124:8080/cheapRide");
+        configuration.setBaseURL("http://10.161.104.9:8080/cheapRide");
         configuration.setRequestTime(100);
 
         //create a list to contain post results

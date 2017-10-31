@@ -13,6 +13,7 @@ public class ReportGenerator extends JPanel {
     int size;
     int[] xx;
     int[] yy;
+    int counter = 0;
 
     public void outputReport(PostResult[] arrayOfPostResult, Configuration configuration) throws FileNotFoundException {
 
@@ -23,9 +24,13 @@ public class ReportGenerator extends JPanel {
         outputString.append("\n");
 
         for (Integer numberOfRow = 0; numberOfRow < configuration.getRequestTime(); numberOfRow ++) {
+            if(arrayOfPostResult[numberOfRow].getStatusCode() == 200)
+                counter ++;
             outputString.append(numberOfRow.toString()  + ". ").append("  Status code : ").append(arrayOfPostResult[numberOfRow].getStatusCode().toString()).append(",").append(" Respond time : ").append(String.valueOf(arrayOfPostResult[numberOfRow].getResponseTime())).append(" ms ");
             outputString.append("\n");
         }
+        outputString.append("success rate : " + counter/configuration.getRequestTime()*100 + "%");
+
         outputString.close();
     }
 
