@@ -4,59 +4,83 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.Objects;
 
 public class ReportGenerator extends JPanel {
-    String xlabel, ylabel, title;
+    String xlabel, ylabel, title, sublabel1, sublabel2;
     int xdim, ydim, yzero, xzero, xdraw, ydraw;
     double xtic, ytic, xpoint, ypoint;
     double  xmax, xmin, ymax, ymin;
     int size;
     int[] xx;
-    int[] yy;
-    int counter = 0;
+//    int[] yy;
+    int[] yyP;
+    int[] yyG;
+    int counterPost = 0;
+    int counterGet = 0;
+    int counterCorr = 0;
 
-    public void outputReport(PostResult[] arrayOfPostResult, Configuration configuration) throws FileNotFoundException {
+    public void outputReport(PostResult[] arrayOfPostResult, GetResult[] arrayOfGetResult,Configuration configuration) throws FileNotFoundException {
 
         String fileName = "report.txt";
         PrintWriter outputString = new PrintWriter(fileName);
 
-        outputString.write("report ");
+        outputString.write("=================================================================REPORT================================================================= ");
         outputString.append("\n");
 
         for (Integer numberOfRow = 0; numberOfRow < configuration.getRequestTime(); numberOfRow ++) {
             if(arrayOfPostResult[numberOfRow].getStatusCode() == 200)
-                counter ++;
-            outputString.append(numberOfRow.toString()  + ". ").append("  Status code : ").append(arrayOfPostResult[numberOfRow].getStatusCode().toString()).append(",").append(" Respond time : ").append(String.valueOf(arrayOfPostResult[numberOfRow].getResponseTime())).append(" ms ");
+                counterPost ++;
+            if(arrayOfGetResult[numberOfRow].getStatusCode() == 200)
+                counterGet ++;
+            if(Objects.equals(compare(arrayOfPostResult[numberOfRow], arrayOfGetResult[numberOfRow]), "passed"))
+                counterCorr ++;
+            int row = numberOfRow + 1;
+            outputString.append(Integer.toString(row)).append(". ").append("  POST Status code : ").append(arrayOfPostResult[numberOfRow].getStatusCode().toString()).append(",").append(" Response time : ").append(String.valueOf(arrayOfPostResult[numberOfRow].getResponseTime())).append(" ms ");
+            outputString.append(" || ").append(" GET Status code : ").append(arrayOfGetResult[numberOfRow].getStatusCode().toString()).append(",").append(" Response time : ").append(String.valueOf(arrayOfGetResult[numberOfRow].getResponseTime())).append(" ms ").append(",").append( "comparison result :  ").append(compare(arrayOfPostResult[numberOfRow],arrayOfGetResult[numberOfRow]));
             outputString.append("\n");
         }
-        outputString.append("success rate : " + counter/configuration.getRequestTime()*100 + "%");
+        outputString.append("=========================================================================================================================================\n");
+        outputString.append("POST method success rate : ").append(String.valueOf((counterPost * 100) / configuration.getRequestTime())).append("%");
+        outputString.append("\n");
+        outputString.append("GET method success rate : ").append(String.valueOf((counterGet * 100) / configuration.getRequestTime())).append("%");
+        outputString.append("\n");
+        outputString.append("GET method correct rate : ").append(String.valueOf((counterCorr *100) / configuration.getRequestTime())).append("%");
 
         outputString.close();
     }
 
-    public void plot(PostResult[] arrayOfPostResult, Configuration configuration){
+    public void plot(PostResult[] arrayOfPostResult, GetResult[] arrayOfGetResult, Configuration configuration){
 
         xdim = 600;
         ydim = 600;
         xtic = 100;
         ytic = 10;
         xlabel = ("Number of Requests");
+        sublabel1 = ("POST: black");
+        sublabel2 = ("GET: red");
         ylabel = ("Respond Time");
         title = ylabel + " versus " + xlabel;
         size = configuration.getRequestTime();
 
         long[] x = new long[size];
-        long[] y = new long[size];
+        long[] yP = new long[size];
+        long[] yG = new long[size];
 
         for(int i = 0; i < size; i++)
             x[i] = i + 1;
-        for (int i = 0; i < size; i++)
-            y[i] = arrayOfPostResult[i].getResponseTime();
+        for(int i = 0; i < size; i++)
+            yP[i] = arrayOfPostResult[i].getResponseTime();
+        for(int i = 0; i < size; i++)
+            yG[i] = arrayOfGetResult[i].getResponseTime();
+
 
         xmax = x[0];
         xmin = x[0];
-        ymax = y[0];
-        ymin = y[0];
+//        ymax = yP[0];
+//        ymin = yP[0];
+        ymax = max(yP[0],yG[0]);
+        ymin = min(yP[0],yG[0]);
 
         for (int i=0; i < size; i++){
             if (x[i] > xmax) {
@@ -65,21 +89,27 @@ public class ReportGenerator extends JPanel {
             if (x[i] < xmin) {
                 xmin = x[i];
             }
-            if (y[i] > ymax) {
-                ymax = y[i];
+            if (max(yP[i], yG[i]) > ymax) {
+//                ymax = yP[i];
+                ymax = max(yP[i], yG[i]);
             }
-            if (y[i] < ymin) {
-                ymin = y[i];
-            }
+//            if (min(yP[i], yG[i]) < ymin) {
+////                ymin = yP[i];
+//                ymin = min(yP[i], yG[i]);
+//            }
+            ymin = 0;
         }
 
         xx = new int[size];
-        yy = new int[size];
+//        yy = new int[size];
+        yyP = new int[size];
+        yyG = new int[size];
 
         //xx and yy are the scaled x and y used for plotting
         for (int i=0; i < size; i++){
             xx[i] = (int)(50 + ((x[i]-xmin)/(xmax-xmin)) * (xdim-100));
-            yy[i] = (int)((ydim - 50) - (((y[i]-ymin)/(ymax-ymin)) * (ydim-100)));
+            yyP[i] = (int)((ydim - 50) - (((yP[i]-ymin)/(ymax-ymin)) * (ydim-100)));
+            yyG[i] = (int)((ydim - 50) - (((yG[i]-ymin)/(ymax-ymin)) * (ydim-100)));
         }
 
         //Find Zero point on y-axis required for drawing the axes
@@ -151,8 +181,10 @@ public class ReportGenerator extends JPanel {
 //Titles and labels
         Font f2 = new Font("TimesRoman", Font.BOLD, 14);
         g.setFont(f2);
-        g.drawString(xlabel, (xdim - 100), (yzero + 25));
+        g.drawString(xlabel, (xdim - 100), (yzero + 20));
         g.drawString(ylabel, (xzero - 25), 40);
+        g.drawString(sublabel1, (xdim - 100), (yzero + 40));
+        g.drawString(sublabel2, (xdim - 100), (yzero + 60));
         g.drawString(title, (xdim/2 - 75), 20);
 
 // Draw Lines
@@ -160,9 +192,43 @@ public class ReportGenerator extends JPanel {
         for (int j = 0; j < size-1; j++)
         {
 
-            g.drawLine(xx[j], yy[j], xx[j+1], yy[j+1]);
+            g.drawLine(xx[j], yyP[j], xx[j+1], yyP[j+1]);
+
         }
 
+        for (int j = 0; j < size-1; j++)
+        {
 
+            g.setColor(Color.RED);
+            g.drawLine(xx[j], yyG[j], xx[j+1], yyG[j+1]);
+        }
+    }
+
+    private String compare(PostResult postResult, GetResult getResult){
+        if((Objects.equals(postResult.getJsonPostBodies().get(0).getUsername(), getResult.getJsonPostBodies().get(0).getUsername()))
+                && (Objects.equals(postResult.getJsonPostBodies().get(0).getDestination(), getResult.getJsonPostBodies().get(0).getDestination()))
+                && (Objects.equals(postResult.getJsonPostBodies().get(0).getFee(), getResult.getJsonPostBodies().get(0).getFee()))
+                && (Objects.equals(postResult.getJsonPostBodies().get(0).getPickup(), getResult.getJsonPostBodies().get(0).getPickup()))
+                && (Objects.equals(postResult.getJsonPostBodies().get(0).getProvider(), getResult.getJsonPostBodies().get(0).getProvider()))
+                )
+            return "passed";
+        else {
+            System.out.println(postResult.getJsonPostBodies().get(0).getDestination() + "||" + getResult.getJsonPostBodies().get(0).getDestination());
+            return "failed";
+        }
+    }
+
+    private long min(long long1, long long2){
+        if(long1 < long2)
+            return long1;
+        else
+            return long2;
+    }
+
+    private long max(long long1, long long2){
+        if(long1 > long2)
+            return long1;
+        else
+            return long2;
     }
 }

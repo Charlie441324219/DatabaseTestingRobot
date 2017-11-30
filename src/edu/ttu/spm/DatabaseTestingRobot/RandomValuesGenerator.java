@@ -48,12 +48,12 @@ public class RandomValuesGenerator {
         return "$" + randomFee;
     }
 
-    public String getRandomUserName(){
-        String SALTCHARS = "QWERTYUIOPASDFGHJKLZXCVBNM";
-        StringBuilder salt = new StringBuilder();
-        Random rnd = new Random();
-        int index = (int) (rnd.nextFloat() * SALTCHARS.length());
-        salt.append(SALTCHARS.charAt(index));
-        return "student" + salt.toString();
+    public String getRandomUserName(int number){
+//        String SALTCHARS = "QWERTYUIOPASDFGHJKLZXCVBNM";
+//        StringBuilder salt = new StringBuilder();
+//        Random rnd = new Random();
+//        int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+//        salt.append(SALTCHARS.charAt(index));
+        return "student" + number;
     }
 }

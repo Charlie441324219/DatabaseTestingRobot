@@ -2,18 +2,17 @@ package edu.ttu.spm.DatabaseTestingRobot;
 
 import java.util.List;
 
-public class PostResult {
+public class GetResult {
     private Integer statusCode;
     private long responseTime;
     private List<JsonPostBody> jsonPostBodies;
 
-    public PostResult() {
-    }
-
-    public PostResult(Integer statusCode, long responseTime, List<JsonPostBody> jsonPostBodies) {
+    public GetResult(Integer statusCode, long responseTime, List<JsonPostBody> jsonPostBodies) {
         this.statusCode = statusCode;
         this.responseTime = responseTime;
         this.jsonPostBodies = jsonPostBodies;
+    }
+    public GetResult() {
     }
 
     public Integer getStatusCode() {
