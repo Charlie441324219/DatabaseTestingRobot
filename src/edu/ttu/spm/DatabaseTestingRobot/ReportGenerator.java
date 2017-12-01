@@ -19,13 +19,16 @@ public class ReportGenerator extends JPanel {
     int counterPost = 0;
     int counterGet = 0;
     int counterCorr = 0;
+    long threadID = Thread.currentThread().getId();
 
     public void outputReport(PostResult[] arrayOfPostResult, GetResult[] arrayOfGetResult,Configuration configuration) throws FileNotFoundException {
 
-        String fileName = "report.txt";
+        String fileName = "report.txt" + threadID;
         PrintWriter outputString = new PrintWriter(fileName);
 
         outputString.write("=================================================================REPORT================================================================= ");
+        outputString.append("\n");
+        outputString.append("Thread" + Thread.currentThread().getId());
         outputString.append("\n");
 
         for (Integer numberOfRow = 0; numberOfRow < configuration.getRequestTime(); numberOfRow ++) {
@@ -60,7 +63,7 @@ public class ReportGenerator extends JPanel {
         sublabel1 = ("POST: black");
         sublabel2 = ("GET: red");
         ylabel = ("Respond Time");
-        title = ylabel + " versus " + xlabel;
+        title = ylabel + " versus " + xlabel + " (Thread" + Thread.currentThread().getId() + ")" ;
         size = configuration.getRequestTime();
 
         long[] x = new long[size];
@@ -213,7 +216,6 @@ public class ReportGenerator extends JPanel {
                 )
             return "passed";
         else {
-            System.out.println(postResult.getJsonPostBodies().get(0).getDestination() + "||" + getResult.getJsonPostBodies().get(0).getDestination());
             return "failed";
         }
     }

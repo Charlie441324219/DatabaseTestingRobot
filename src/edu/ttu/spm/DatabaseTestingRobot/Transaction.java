@@ -1,8 +1,5 @@
 package edu.ttu.spm.DatabaseTestingRobot;
 
-//import net.sf.json.JSONObject;
-//import net.sf.json.JSONSerializer;
-
 import org.apache.http.Header;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -58,7 +55,7 @@ public class Transaction {
 
         CloseableHttpResponse response = client.execute(httpPost);
         int responseCode = response.getStatusLine().getStatusCode();
-        //System.out.println(responseCode);
+        System.out.println("Thread " + Thread.currentThread().getId() + " send POST request");
 
         client.close();
 
@@ -121,6 +118,7 @@ public class Transaction {
                 jsonGetBodies.add(temp);
             }
         }
+        System.out.println("Thread " + Thread.currentThread().getId() + " send GET request");
         reader.close();
 
         return new GetResult(responseCode,elapsedTime,jsonGetBodies);

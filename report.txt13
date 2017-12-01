@@ -1,0 +1,46 @@
+=================================================================REPORT================================================================= 
+Thread13
+1.   POST Status code : 200, Response time : 51 ms  ||  GET Status code : 200, Response time : 7 ms ,comparison result :  passed
+2.   POST Status code : 200, Response time : 3 ms  ||  GET Status code : 200, Response time : 18 ms ,comparison result :  passed
+3.   POST Status code : 200, Response time : 3 ms  ||  GET Status code : 200, Response time : 10 ms ,comparison result :  passed
+4.   POST Status code : 200, Response time : 3 ms  ||  GET Status code : 200, Response time : 6 ms ,comparison result :  passed
+5.   POST Status code : 200, Response time : 3 ms  ||  GET Status code : 200, Response time : 6 ms ,comparison result :  passed
+6.   POST Status code : 200, Response time : 7 ms  ||  GET Status code : 200, Response time : 13 ms ,comparison result :  passed
+7.   POST Status code : 200, Response time : 2 ms  ||  GET Status code : 200, Response time : 6 ms ,comparison result :  passed
+8.   POST Status code : 200, Response time : 3 ms  ||  GET Status code : 200, Response time : 4 ms ,comparison result :  passed
+9.   POST Status code : 200, Response time : 3 ms  ||  GET Status code : 200, Response time : 6 ms ,comparison result :  passed
+10.   POST Status code : 200, Response time : 2 ms  ||  GET Status code : 200, Response time : 5 ms ,comparison result :  passed
+11.   POST Status code : 200, Response time : 4 ms  ||  GET Status code : 200, Response time : 5 ms ,comparison result :  passed
+12.   POST Status code : 200, Response time : 4 ms  ||  GET Status code : 200, Response time : 5 ms ,comparison result :  passed
+13.   POST Status code : 200, Response time : 3 ms  ||  GET Status code : 200, Response time : 5 ms ,comparison result :  passed
+14.   POST Status code : 200, Response time : 3 ms  ||  GET Status code : 200, Response time : 6 ms ,comparison result :  passed
+15.   POST Status code : 200, Response time : 3 ms  ||  GET Status code : 200, Response time : 6 ms ,comparison result :  passed
+16.   POST Status code : 200, Response time : 3 ms  ||  GET Status code : 200, Response time : 5 ms ,comparison result :  passed
+17.   POST Status code : 200, Response time : 3 ms  ||  GET Status code : 200, Response time : 7 ms ,comparison result :  passed
+18.   POST Status code : 200, Response time : 3 ms  ||  GET Status code : 200, Response time : 5 ms ,comparison result :  passed
+19.   POST Status code : 200, Response time : 2 ms  ||  GET Status code : 200, Response time : 5 ms ,comparison result :  passed
+20.   POST Status code : 200, Response time : 3 ms  ||  GET Status code : 200, Response time : 5 ms ,comparison result :  passed
+21.   POST Status code : 200, Response time : 4 ms  ||  GET Status code : 200, Response time : 5 ms ,comparison result :  passed
+22.   POST Status code : 200, Response time : 3 ms  ||  GET Status code : 200, Response time : 5 ms ,comparison result :  passed
+23.   POST Status code : 200, Response time : 3 ms  ||  GET Status code : 200, Response time : 5 ms ,comparison result :  passed
+24.   POST Status code : 200, Response time : 3 ms  ||  GET Status code : 200, Response time : 6 ms ,comparison result :  passed
+25.   POST Status code : 200, Response time : 3 ms  ||  GET Status code : 200, Response time : 6 ms ,comparison result :  passed
+26.   POST Status code : 200, Response time : 3 ms  ||  GET Status code : 200, Response time : 5 ms ,comparison result :  passed
+27.   POST Status code : 200, Response time : 4 ms  ||  GET Status code : 200, Response time : 5 ms ,comparison result :  passed
+28.   POST Status code : 200, Response time : 2 ms  ||  GET Status code : 200, Response time : 5 ms ,comparison result :  passed
+29.   POST Status code : 200, Response time : 3 ms  ||  GET Status code : 200, Response time : 6 ms ,comparison result :  passed
+30.   POST Status code : 200, Response time : 3 ms  ||  GET Status code : 200, Response time : 5 ms ,comparison result :  passed
+31.   POST Status code : 200, Response time : 3 ms  ||  GET Status code : 200, Response time : 6 ms ,comparison result :  passed
+32.   POST Status code : 200, Response time : 5 ms  ||  GET Status code : 200, Response time : 4 ms ,comparison result :  passed
+33.   POST Status code : 200, Response time : 3 ms  ||  GET Status code : 200, Response time : 7 ms ,comparison result :  passed
+34.   POST Status code : 200, Response time : 3 ms  ||  GET Status code : 200, Response time : 5 ms ,comparison result :  passed
+35.   POST Status code : 200, Response time : 3 ms  ||  GET Status code : 200, Response time : 13 ms ,comparison result :  passed
+36.   POST Status code : 200, Response time : 6 ms  ||  GET Status code : 200, Response time : 5 ms ,comparison result :  passed
+37.   POST Status code : 200, Response time : 7 ms  ||  GET Status code : 200, Response time : 6 ms ,comparison result :  passed
+38.   POST Status code : 200, Response time : 5 ms  ||  GET Status code : 200, Response time : 5 ms ,comparison result :  passed
+39.   POST Status code : 200, Response time : 7 ms  ||  GET Status code : 200, Response time : 10 ms ,comparison result :  passed
+40.   POST Status code : 200, Response time : 6 ms  ||  GET Status code : 200, Response time : 5 ms ,comparison result :  passed
+=========================================================================================================================================
+POST method success rate : 100%
+GET method success rate : 100%
+GET method correct rate : 100%

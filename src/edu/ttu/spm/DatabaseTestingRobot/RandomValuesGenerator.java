@@ -54,6 +54,6 @@ public class RandomValuesGenerator {
 //        Random rnd = new Random();
 //        int index = (int) (rnd.nextFloat() * SALTCHARS.length());
 //        salt.append(SALTCHARS.charAt(index));
-        return "student" + number;
+        return "student" + number + Thread.currentThread().getId();
     }
 }

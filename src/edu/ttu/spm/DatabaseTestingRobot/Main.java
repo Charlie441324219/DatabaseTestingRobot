@@ -6,15 +6,30 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class Main {
+import static edu.ttu.spm.DatabaseTestingRobot.Main.REQUEST_NUM;
+import static edu.ttu.spm.DatabaseTestingRobot.Main.URL;
 
-//    static String URL = "http://192.168.1.73:8080/cheapRide";
-    static String URL = "http://10.161.95.97:8080/cheapRide";
+public class Main {
+    static int THREAD = 2;
+    static String URL = "http://192.168.1.73:8080/cheapRide";
+    //    static String URL = "http://10.161.95.97:8080/cheapRide";
     static int REQUEST_NUM = 40;
 
-    public static void main(String[] args) throws IOException, JSONException {
+    public static void main(String[] args){
+
+        for (int i = 0; i < THREAD; i++){
+            Multithreading user = new Multithreading();
+            user.start();
+        }
+    }
+}
+
+class Multithreading extends Thread {
+
+    public void run() {
 
         //set configuration
         Configuration configuration = new Configuration();
@@ -48,7 +63,11 @@ public class Main {
             Transaction transaction = new Transaction();
 
             //save result
-            postResult[i] =transaction.JsonPost(configuration, jsonPostBody);
+            try {
+                postResult[i] =transaction.JsonPost(configuration, jsonPostBody);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         for(int i = 0; i < configuration.getRequestTime(); i++) {
@@ -64,12 +83,22 @@ public class Main {
             Transaction transaction = new Transaction();
 
             //save result
-            getResult[i] =transaction.JsonGet(configuration, jsonGetBody);
+            try {
+                getResult[i] =transaction.JsonGet(configuration, jsonGetBody);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
 
         //output report
         ReportGenerator reportGenerator = new ReportGenerator();
-        reportGenerator.outputReport(postResult, getResult,configuration);
+        try {
+            reportGenerator.outputReport(postResult, getResult,configuration);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
         //draw graph
         reportGenerator.plot(postResult, getResult, configuration);
